@@ -1,6 +1,15 @@
 <?php
 
+use App\Http\Middleware\admin;
+use App\Livewire\Admin\Activities\Index as ActivitiesIndex;
 use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Admin\Bookings\Index as BookingsIndex;
+use App\Livewire\Admin\Logs\Index as LogsIndex;
+use App\Livewire\Admin\Reports\Index as ReportsIndex;
+use App\Livewire\Admin\Rooms\Index;
+use App\Livewire\Admin\Schedule\Index as ScheduleIndex;
+use App\Livewire\Admin\Settings\Index as SettingsIndex;
+use App\Livewire\Admin\Users\Index as UsersIndex;
 use App\Livewire\User\UserHomepage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -20,6 +29,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard',AdminDashboard::class)->name('admin.dashboard');
+    Route::get('/admin/rooms/index', Index::class)->name('admin.rooms.index');
+    Route::get('/admin/bookings/index',BookingsIndex::class)->name('admin.bookings.index');
+    Route::get('/admin/schedule/index',ScheduleIndex::class)->name('admin.schedule.index');
+    Route::get('/admin/users/index',UsersIndex::class)->name('admin.users.index');
+    Route::get('/admin/activities/index',ActivitiesIndex::class)->name('admin.activities.index');
+    Route::get('/admin/reports/index',ReportsIndex::class)->name('admin.reports.index');
+    Route::get('/admin/settings/index',SettingsIndex::class)->name('admin.settings.index');
+    Route::get('/admin/logs/index',LogsIndex::class)->name('admin.logs.index');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
