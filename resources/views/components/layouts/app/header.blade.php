@@ -6,16 +6,15 @@
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-            <a href="{{ route (auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'user.homepage') }}" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0" wire:navigate>
+            <a href="{{ route (auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage') }}" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0" wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route(auth()->check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'user.homepage')"
-                    :current="request()->routeIs(auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'user.homepage')" wire:navigate>
+                <flux:navbar.item icon="home" :href="route(auth()->check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage')"
+                    :current="request()->routeIs(auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage')" wire:navigate>
                     {{ __('Home') }}
                 </flux:navbar.item>
-                <flux:navbar.item href="#" icon="home">Home</flux:navbar.item>
                 <flux:navbar.item href="#" icon="puzzle-piece">Features</flux:navbar.item>
                 <flux:navbar.item href="#" icon="currency-dollar">Pricing</flux:navbar.item>
                 <flux:navbar.item href="#" icon="user">About</flux:navbar.item>
@@ -23,7 +22,7 @@
 
             <flux:spacer />
 
-            <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
+            <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0! max-lg:hidden">
                 <flux:tooltip :content="__('Search')" position="bottom">
                     <flux:navbar.item class="!h-10 [&>div>svg]:size-5" icon="magnifying-glass" href="#" :label="__('Search')" />
                 </flux:tooltip>
@@ -77,7 +76,7 @@
 
             @else
                     <!-- Menu untuk Guest (belum login) -->
-        <nav class="flex items-center justify-end gap-4">
+        <nav class="flex items-center justify-end gap-4 max-lg:hidden">
             <a href="{{ route('login') }}" class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal">
                 Log in
             </a>
@@ -88,19 +87,46 @@
             @endif
         </nav>
     @endauth
+
+    @guest
+    <!-- Menu Dropdown untuk Guest (belum login) -->
+    <flux:dropdown position="top" align="end" class="lg:hidden">
+        <flux:navbar.item icon="user" wire:navigate>
+            Masuk
+        </flux:navbar.item>
+
+        <flux:menu>
+            <flux:menu.radio.group>
+                <!-- Link Login -->
+                <flux:menu.item :href="route('login')" icon="" wire:navigate>
+                    {{ __('Log in') }}
+                </flux:menu.item>
+            </flux:menu.radio.group>
+
+            <flux:menu.separator />
+
+            <flux:menu.radio.group>
+                <!-- Link Register -->
+                <flux:menu.item :href="route('register')" icon="user-plus" wire:navigate>
+                    {{ __('Register') }}
+                </flux:menu.item>
+            </flux:menu.radio.group>
+        </flux:menu>
+    </flux:dropdown>
+@endguest
         </flux:header>
 
         <!-- Mobile Menu -->
         <flux:sidebar stashable sticky class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="ms-1 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{ route('user.homepage') }}" class="ms-1 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')">
-                    <flux:navlist.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                    <flux:navlist.item icon="layout-grid" :href="route('user.homepage')" :current="request()->routeIs('user.homepage')" wire:navigate>
                     {{ __('Dashboard') }}
                     </flux:navlist.item>
                 </flux:navlist.group>
