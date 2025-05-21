@@ -29,5 +29,10 @@ class RoomsSeeder extends Seeder
             ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.3', 'room_type' => 'kelas'],
             ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.4', 'room_type' => 'kelas'],
         ]);
+
+         DB::table('rooms')->insert([
+            ['building' => 'B', 'floor' => 1, 'room_number' => 'B1.1', 'room_type' => 'aula'],
+           
+        ]);
     }
 }
