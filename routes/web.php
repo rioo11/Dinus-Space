@@ -10,6 +10,8 @@ use App\Livewire\Admin\Rooms\Index;
 use App\Livewire\Admin\Schedule\Index as ScheduleIndex;
 use App\Livewire\Admin\Settings\Index as SettingsIndex;
 use App\Livewire\Admin\Users\Index as UsersIndex;
+
+use App\Livewire\User\Booking\Index as UserBookingsIndex;
 use App\Livewire\User\UserHomepage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -25,6 +27,7 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/homepage',UserHomepage::class)->name('user.homepage');
+    Route::get('user/bookings',UserBookingsIndex::class)->name('user.bookings');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
