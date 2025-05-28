@@ -21,7 +21,7 @@
 
     <!-- Grup: Manajemen -->
     <flux:navlist.group :heading="__('Manajemen')" class="grid">
-        <flux:navlist.item icon="building-library" :href="route('admin.rooms.index')" :current="request()->routeIs('admin.rooms.*')" wire:navigate>
+        <flux:navlist.item icon="building-library" :href="route('admin.rooms')" :current="request()->routeIs('admin.rooms.*')" wire:navigate>
             {{ __('Ruang Kelas') }}
         </flux:navlist.item>
 

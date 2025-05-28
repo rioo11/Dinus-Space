@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Admin\Bookings;
+namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\RoomBooking;
 use App\Models\RoomSchedule;
 
-class Index extends Component
+class bookings extends Component
 {
         public $bookings;
 
