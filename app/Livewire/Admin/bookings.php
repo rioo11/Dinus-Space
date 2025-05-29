@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\RoomBooking;
 use App\Models\RoomSchedule;
 
-class bookings extends Component
+class Bookings extends Component
 {
         public $bookings;
 
