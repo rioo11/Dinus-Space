@@ -9,23 +9,36 @@ use Flux;
 class Rooms extends Component
 {
     public $rooms;
+
     public $building, $floor, $room_number, $room_type;
-    public $roomId;
-    public $roomIdToDelete;
+    public $roomId = null;
+    public $roomIdToDelete = null;
     public $isEdit = false;
 
-    // Menampilkan daftar ruangan
+    // Load data ruangan saat komponen dipasang
     public function mount()
     {
         $this->loadRooms();
     }
 
+    // Ambil semua data ruangan
     public function loadRooms()
     {
         $this->rooms = Room::all();
     }
 
-    // Buka modal untuk tambah ruangan
+    // Reset field input
+    public function resetForm()
+    {
+        $this->building = '';
+        $this->floor = '';
+        $this->room_number = '';
+        $this->room_type = '';
+        $this->roomId = null;
+        $this->isEdit = false;
+    }
+
+    // Tampilkan modal untuk tambah ruangan
     public function openModal()
     {
         $this->resetForm();
@@ -51,6 +64,7 @@ class Rooms extends Component
         ]);
 
         Room::create($validatedData);
+
         session()->flash('message', 'Ruangan berhasil ditambahkan.');
         $this->resetForm();
         $this->modal('room-form')->close();
@@ -61,6 +75,7 @@ class Rooms extends Component
     public function edit($id)
     {
         $room = Room::findOrFail($id);
+
         $this->fill([
             'roomId' => $room->id,
             'building' => $room->building,
@@ -68,6 +83,7 @@ class Rooms extends Component
             'room_number' => $room->room_number,
             'room_type' => $room->room_type,
         ]);
+
         $this->isEdit = true;
         $this->modal('room-form')->show();
     }
@@ -84,37 +100,40 @@ class Rooms extends Component
 
         $room = Room::findOrFail($this->roomId);
         $room->update($validatedData);
+
         session()->flash('message', 'Ruangan berhasil diperbarui.');
         $this->resetForm();
         $this->modal('room-form')->close();
         $this->loadRooms();
     }
 
-    // Hapus ruangan
+    // Tampilkan modal konfirmasi hapus
     public function confirmDelete($id)
     {
         $this->roomIdToDelete = $id;
-        $this->modal('confirm-delete')->show(); // Panggil modal Flux
+        $this->modal('confirm-delete')->show();
     }
 
+    // Hapus ruangan
     public function deleteRoom()
     {
         Room::destroy($this->roomIdToDelete);
+
         session()->flash('message', 'Ruangan berhasil dihapus.');
         $this->roomIdToDelete = null;
         $this->modal('confirm-delete')->close();
-        $this->mount(); // Refresh data
+        $this->loadRooms();
     }
 
-    // Reset form
-    public function resetForm()
+    // Optional: validasi field secara realtime
+    public function updated($property)
     {
-        $this->building = '';
-        $this->floor = '';
-        $this->room_number = '';
-        $this->room_type = '';
-        $this->roomId = null;
-        $this->isEdit = false;
+        $this->validateOnly($property, [
+            'building' => 'required|string|max:255',
+            'floor' => 'required|integer',
+            'room_number' => 'required|string|max:10',
+            'room_type' => 'required|string',
+        ]);
     }
 
     public function render()

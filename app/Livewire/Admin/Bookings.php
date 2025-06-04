@@ -54,6 +54,6 @@ class Bookings extends Component
     }
     public function render()
     {
-        return view('livewire.admin.bookings.index');
+        return view('livewire.admin.bookings.Bookings');
     }
 }

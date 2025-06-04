@@ -100,25 +100,47 @@
             </h2>
 
             <form wire:submit.prevent="{{ $schedule_id ? "update" : "store" }}" class="space-y-4">
+                {{-- Dropdown Ruangan --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-white mb-1">Ruangan</label>
-                    <select wire:model="room_id" class="w-full border-gray-300 dark:bg-gray-700 rounded-md">
-                        @foreach ($rooms as $room)
-                            <option value="{{ $room->id }}">{{ $room->building }} - {{ $room->room_number }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <flux:dropdown>
+                        <flux:button icon:trailing="chevron-down">
+                            @php
+                                $selectedRoom = collect($rooms)->firstWhere("id", $room_id);
+                            @endphp
+                            {{ $selectedRoom ? "{$selectedRoom->building} - {$selectedRoom->room_number}" : "Pilih Ruangan" }}
+                        </flux:button>
+
+                        <flux:menu>
+                            @foreach ($rooms as $room)
+                                <flux:menu.item wire:click="$set('room_id', {{ $room->id }})">
+                                    {{ $room->building }} - {{ $room->room_number }}
+                                </flux:menu.item>
+                            @endforeach
+                        </flux:menu>
+                    </flux:dropdown>
                 </div>
 
                 <flux:input label="Nama Kegiatan" placeholder="Masukkan nama kegiatan" wire:model.defer="activity_name"
                     required />
 
+                {{-- Dropdown Jenis Jadwal --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-white mb-1">Jenis Jadwal</label>
-                    <select wire:model="schedule_type" class="w-full border-gray-300 dark:bg-gray-700 rounded-md">
-                        <option value="booking">Booking</option>
-                        <option value="academic">Akademik</option>
-                    </select>
+                    <flux:dropdown>
+                        <flux:button icon:trailing="chevron-down">
+                            {{ $schedule_type === "academic" ? "Akademik" : "Booking" }}
+                        </flux:button>
+
+                        <flux:menu>
+                            <flux:menu.radio.group>
+                                <flux:menu.radio value="booking" wire:click="$set('schedule_type', 'booking')">Booking
+                                </flux:menu.radio>
+                                <flux:menu.radio value="academic" wire:click="$set('schedule_type', 'academic')">
+                                    Akademik</flux:menu.radio>
+                            </flux:menu.radio.group>
+                        </flux:menu>
+                    </flux:dropdown>
                 </div>
 
                 @if ($schedule_type === "booking")
@@ -150,8 +172,9 @@
     <flux:modal name="confirm-delete" class="w-full max-w-md">
         <div class="space-y-4">
             <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Konfirmasi Hapus</h2>
-            <p class="text-gray-700 dark:text-gray-300">Apakah Anda yakin ingin menghapus jadwal ini? Tindakan ini tidak
-                dapat dibatalkan.</p>
+            <p class="text-gray-700 dark:text-gray-300">
+                Apakah Anda yakin ingin menghapus jadwal ini? Tindakan ini tidak dapat dibatalkan.
+            </p>
 
             <div class="flex justify-end space-x-2">
                 <flux:button type="button" variant="subtle"
@@ -160,4 +183,5 @@
             </div>
         </div>
     </flux:modal>
+
 </div>
