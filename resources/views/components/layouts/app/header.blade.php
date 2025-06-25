@@ -4,7 +4,7 @@
         @include('partials.head')
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:header container class="sticky top-0 z-50 border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
             <a href="{{ route (auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage') }}" class="ms-2 me-5 flex items-center space-x-2 rtl:space-x-reverse lg:ms-0" wire:navigate>
                 <x-app-logo />
@@ -15,8 +15,10 @@
                     :current="request()->routeIs(auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage')" wire:navigate>
                     {{ __('Home') }}
                 </flux:navbar.item>
-                <flux:navbar.item icon="puzzle-piece" :href="route('user.bookings')">Pemesanan</flux:navbar.item>
-                <flux:navbar.item href="#" icon="currency-dollar">Pricing</flux:navbar.item>
+                <flux:navbar.item href="#" icon="currency-dollar" wire:navigate>
+                    {{ __('Jadwal') }}</flux:navbar.item>
+                <flux:navbar.item icon="puzzle-piece" :href="route('user.bookings')" wire:navigate>
+                    {{ __('Pemesanan Ruangan') }}</flux:navbar.item>
                 <flux:navbar.item href="#" icon="user">About</flux:navbar.item>
             </flux:navbar>
 

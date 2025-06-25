@@ -16,31 +16,41 @@
                     <option value="{{ $room->id }}">{{ $room->building }} - {{ $room->room_number }}</option>
                 @endforeach
             </select>
-            @error('room_id') <small class="text-red-600">{{ $message }}</small> @enderror
+            @error("room_id")
+                <small class="text-red-600">{{ $message }}</small>
+            @enderror
         </div>
 
         <div>
             <label class="block">Nama Kegiatan</label>
             <input type="text" wire:model="activity_name" class="border rounded w-full p-2" />
-            @error('activity_name') <small class="text-red-600">{{ $message }}</small> @enderror
+            @error("activity_name")
+                <small class="text-red-600">{{ $message }}</small>
+            @enderror
         </div>
 
         <div>
             <label class="block">Tanggal</label>
             <input type="date" wire:model="date" class="border rounded w-full p-2" />
-            @error('date') <small class="text-red-600">{{ $message }}</small> @enderror
+            @error("date")
+                <small class="text-red-600">{{ $message }}</small>
+            @enderror
         </div>
 
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="block">Jam Mulai</label>
                 <input type="time" wire:model="start_time" class="border rounded w-full p-2" />
-                @error('start_time') <small class="text-red-600">{{ $message }}</small> @enderror
+                @error("start_time")
+                    <small class="text-red-600">{{ $message }}</small>
+                @enderror
             </div>
             <div>
                 <label class="block">Jam Selesai</label>
                 <input type="time" wire:model="end_time" class="border rounded w-full p-2" />
-                @error('end_time') <small class="text-red-600">{{ $message }}</small> @enderror
+                @error("end_time")
+                    <small class="text-red-600">{{ $message }}</small>
+                @enderror
             </div>
         </div>
 
