@@ -15,7 +15,7 @@
                     :current="request()->routeIs(auth()-> check() ? (auth()->user()->role == 'admin' ? 'admin.dashboard' : 'user.homepage'): 'guest.homepage')" wire:navigate>
                     {{ __('Home') }}
                 </flux:navbar.item>
-                <flux:navbar.item href="#" icon="currency-dollar" wire:navigate>
+                <flux:navbar.item icon="currency-dollar" :href="route('user.jadwal')" wire:navigate>
                     {{ __('Jadwal') }}</flux:navbar.item>
                 <flux:navbar.item icon="puzzle-piece" :href="route('user.bookings')" wire:navigate>
                     {{ __('Pemesanan Ruangan') }}</flux:navbar.item>

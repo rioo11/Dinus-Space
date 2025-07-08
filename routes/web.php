@@ -15,6 +15,7 @@ use App\Livewire\User\UserHomepage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\User\Sessions\Jadwal;
 // use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Route::view('dashboard', 'dashboard')
@@ -27,6 +28,7 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/homepage',UserHomepage::class)->name('user.homepage');
+    Route::get('user/jadwal',Jadwal::class)->name('user.jadwal');
     Route::get('user/bookings',UserBookingsIndex::class)->name('user.bookings');
 });
 
@@ -49,5 +51,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
+
+
+
+
 
 require __DIR__.'/auth.php';
