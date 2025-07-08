@@ -15,33 +15,33 @@ class RoomsSeeder extends Seeder
     {
         // Menambahkan ruang kelas di Gedung A Lantai 2 (5 ruang kelas)
         DB::table('rooms')->insert([
-            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.1', 'room_type' => 'kelas'],
-            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.2', 'room_type' => 'kelas'],
-            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.3', 'room_type' => 'kelas'],
-            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.4', 'room_type' => 'kelas'],
-            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.5', 'room_type' => 'kelas'],
+            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.1', 'room_type' => 'Kelas'],
+            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.2', 'room_type' => 'Kelas'],
+            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.3', 'room_type' => 'Kelas'],
+            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.4', 'room_type' => 'Kelas'],
+            ['building' => 'A', 'floor' => 2, 'room_number' => 'A2.5', 'room_type' => 'Kelas'],
         ]);
 
         // Menambahkan ruang kelas di Gedung D Lantai 1 (4 ruang kelas)
         DB::table('rooms')->insert([
-            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.1', 'room_type' => 'kelas'],
-            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.2', 'room_type' => 'kelas'],
-            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.3', 'room_type' => 'kelas'],
-            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.4', 'room_type' => 'kelas'],
+            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.1', 'room_type' => 'Kelas'],
+            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.2', 'room_type' => 'Kelas'],
+            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.3', 'room_type' => 'Kelas'],
+            ['building' => 'D', 'floor' => 1, 'room_number' => 'D1.4', 'room_type' => 'Kelas'],
         ]);
 
          DB::table('rooms')->insert([
-            ['building' => 'B', 'floor' => 1, 'room_number' => 'B1.1', 'room_type' => 'aula'],
-           
+            ['building' => 'B', 'floor' => 1, 'room_number' => 'B1.1', 'room_type' => 'Aula'],
+
         ]);
         DB::table('rooms')->insert([
-            ['building' => 'C', 'floor' => 1, 'room_number' => 'C1.1', 'room_type' => 'lab DKV'],
-           ['building' => 'C', 'floor' => 2, 'room_number' => 'C1.2', 'room_type' => 'lab Komputer'],
-           ['building' => 'C', 'floor' => 2, 'room_number' => 'C1.3', 'room_type' => 'lab foto'],
+            ['building' => 'C', 'floor' => 1, 'room_number' => 'C1.1', 'room_type' => 'Lab DKV'],
+           ['building' => 'C', 'floor' => 2, 'room_number' => 'C2.2', 'room_type' => 'Lab Komputer'],
+           ['building' => 'C', 'floor' => 2, 'room_number' => 'C2.3', 'room_type' => 'Lab Foto'],
         ]);
         DB::table('rooms')->insert([
-            ['building' => 'E', 'floor' => 2, 'room_number' => 'E1.1', 'room_type' => 'lab komputer'],
-           ['building' => 'E', 'floor' => 2, 'room_number' => 'E1.2', 'room_type' => 'lab Komputer'],
+            ['building' => 'E', 'floor' => 2, 'room_number' => 'E2.1', 'room_type' => 'Lab Komputer'],
+           ['building' => 'E', 'floor' => 2, 'room_number' => 'E2.2', 'room_type' => 'Lab Komputer'],
         ]);
     }
 }

@@ -44,7 +44,6 @@
 
 
 
-
   <!-- Tentang -->
   <section class="flex flex-col-reverse md:flex-row items-center justify-between px-8 md:px-20 py-16 bg-indigo-50">
     <div class="max-w-xl mt-10 md:mt-0">

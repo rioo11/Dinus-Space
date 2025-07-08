@@ -14,14 +14,13 @@ class Schedule extends Component
 
     public $schedule_id;
     public $activity_name;
-    public $schedule_type = 'booking';
+    public $schedule_type = 'Booking';
 
     // Booking
     public $date;
     public $booked_by;
 
     // Academic
-    public $semester;
     public $day_of_week;
     public $lecturer;
     public $class_name;
@@ -36,7 +35,6 @@ class Schedule extends Component
     public function mount()
     {
         $this->rooms = Room::all();
-        $this->room_id = optional($this->rooms->first())->id;
         $this->loadSchedules();
     }
 
@@ -47,7 +45,11 @@ class Schedule extends Component
 
     public function loadSchedules()
     {
-        $this->schedules = RoomSchedule::where('room_id', $this->room_id)->orderBy('start_time')->get();
+    $this->schedules = RoomSchedule::join('rooms', 'room_schedules.room_id', '=', 'rooms.id') // Melakukan join dengan tabel rooms
+        ->select('room_schedules.*', 'rooms.room_number') // Pilih kolom dari room_schedules dan room_number dari rooms
+        ->orderBy('rooms.room_number') // Urutkan berdasarkan room_number
+        ->orderBy('room_schedules.start_time') // Urutkan berdasarkan waktu mulai
+        ->get();
     }
 
     public function rules()
@@ -57,14 +59,13 @@ class Schedule extends Component
             'activity_name' => 'required|string|max:255',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
-            'schedule_type' => ['required', Rule::in(['booking', 'academic'])],
+            'schedule_type' => ['required', Rule::in(['Booking', 'Academic'])],
         ];
 
-        if ($this->schedule_type === 'booking') {
+        if ($this->schedule_type === 'Booking') {
             $base['date'] = 'required|date';
             $base['booked_by'] = 'required|string|max:255';
         } else {
-            $base['semester'] = 'required|string|max:20';
             $base['day_of_week'] = 'required|string|max:20';
             $base['lecturer'] = 'required|string|max:255';
             $base['class_name'] = 'required|string|max:100';
@@ -81,14 +82,13 @@ class Schedule extends Component
             'schedule_type',
             'date',
             'booked_by',
-            'semester',
             'day_of_week',
             'lecturer',
             'class_name',
             'start_time',
             'end_time',
         ]);
-        $this->schedule_type = 'booking';
+        $this->schedule_type = 'Booking';
     }
 
     public function openModal()
@@ -107,11 +107,10 @@ class Schedule extends Component
         $this->start_time = $schedule->start_time;
         $this->end_time = $schedule->end_time;
 
-        if ($schedule->schedule_type === 'booking') {
+        if ($schedule->schedule_type === 'Booking') {
             $this->date = $schedule->date;
             $this->booked_by = $schedule->booked_by;
         } else {
-            $this->semester = $schedule->semester;
             $this->day_of_week = $schedule->day_of_week;
             $this->lecturer = $schedule->lecturer;
             $this->class_name = $schedule->class_name;
@@ -130,12 +129,11 @@ class Schedule extends Component
             'schedule_type' => $this->schedule_type,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
-            'date' => $this->schedule_type === 'booking' ? $this->date : null,
-            'booked_by' => $this->schedule_type === 'booking' ? $this->booked_by : null,
-            'semester' => $this->schedule_type === 'academic' ? $this->semester : null,
-            'day_of_week' => $this->schedule_type === 'academic' ? $this->day_of_week : null,
-            'lecturer' => $this->schedule_type === 'academic' ? $this->lecturer : null,
-            'class_name' => $this->schedule_type === 'academic' ? $this->class_name : null,
+            'date' => $this->schedule_type === 'Booking' ? $this->date : null,
+            'booked_by' => $this->schedule_type === 'Booking' ? $this->booked_by : null,
+            'day_of_week' => $this->schedule_type === 'Academic' ? $this->day_of_week : null,
+            'lecturer' => $this->schedule_type === 'Academic' ? $this->lecturer : null,
+            'class_name' => $this->schedule_type === 'Academic' ? $this->class_name : null,
         ]);
 
         $this->modal('schedule-form')->close();
@@ -157,12 +155,11 @@ class Schedule extends Component
             'schedule_type' => $this->schedule_type,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
-            'date' => $this->schedule_type === 'booking' ? $this->date : null,
-            'booked_by' => $this->schedule_type === 'booking' ? $this->booked_by : null,
-            'semester' => $this->schedule_type === 'academic' ? $this->semester : null,
-            'day_of_week' => $this->schedule_type === 'academic' ? $this->day_of_week : null,
-            'lecturer' => $this->schedule_type === 'academic' ? $this->lecturer : null,
-            'class_name' => $this->schedule_type === 'academic' ? $this->class_name : null,
+            'date' => $this->schedule_type === 'Booking' ? $this->date : null,
+            'booked_by' => $this->schedule_type === 'Booking' ? $this->booked_by : null,
+            'day_of_week' => $this->schedule_type === 'Academic' ? $this->day_of_week : null,
+            'lecturer' => $this->schedule_type === 'Academic' ? $this->lecturer : null,
+            'class_name' => $this->schedule_type === 'Academic' ? $this->class_name : null,
         ]);
 
         $this->modal('schedule-form')->close();

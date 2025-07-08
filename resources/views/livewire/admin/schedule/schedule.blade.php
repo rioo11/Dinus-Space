@@ -48,10 +48,10 @@
                                         {{ $schedule->schedule_type }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200">
-                                        @if ($schedule->schedule_type === "booking")
+                                        @if ($schedule->schedule_type === "Booking")
                                             {{ \Carbon\Carbon::parse($schedule->date)->translatedFormat("l, d M Y") }}
                                         @else
-                                            {{ $schedule->day_of_week }} (Semester {{ ucfirst($schedule->semester) }})
+                                            {{ $schedule->day_of_week }}
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200">
@@ -59,7 +59,7 @@
                                         {{ \Carbon\Carbon::parse($schedule->end_time)->format("H:i") }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200">
-                                        @if ($schedule->schedule_type === "booking")
+                                        @if ($schedule->schedule_type === "Booking")
                                             Peminjam: {{ $schedule->booked_by ?? "-" }}
                                         @else
                                             Dosen: {{ $schedule->lecturer }}<br>
@@ -129,25 +129,24 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-white mb-1">Jenis Jadwal</label>
                     <flux:dropdown>
                         <flux:button icon:trailing="chevron-down">
-                            {{ $schedule_type === "academic" ? "Akademik" : "Booking" }}
+                            {{ $schedule_type === "Academic" ? "Academic" : "Booking" }}
                         </flux:button>
 
                         <flux:menu>
                             <flux:menu.radio.group>
-                                <flux:menu.radio value="booking" wire:click="$set('schedule_type', 'booking')">Booking
+                                <flux:menu.radio value="Booking" wire:click="$set('schedule_type', 'Booking')">Booking
                                 </flux:menu.radio>
-                                <flux:menu.radio value="academic" wire:click="$set('schedule_type', 'academic')">
-                                    Akademik</flux:menu.radio>
+                                <flux:menu.radio value="Academic" wire:click="$set('schedule_type', 'Academic')">
+                                    Academic</flux:menu.radio>
                             </flux:menu.radio.group>
                         </flux:menu>
                     </flux:dropdown>
                 </div>
 
-                @if ($schedule_type === "booking")
+                @if ($schedule_type === "Booking")
                     <flux:input type="date" label="Tanggal" wire:model.defer="date" required />
                     <flux:input label="Peminjam" placeholder="Nama peminjam" wire:model.defer="booked_by" required />
                 @else
-                    <flux:input label="Semester" placeholder="Semester" wire:model.defer="semester" required />
                     <flux:input label="Hari" placeholder="Contoh: Senin" wire:model.defer="day_of_week" required />
                     <flux:input label="Dosen" placeholder="Nama dosen" wire:model.defer="lecturer" required />
                     <flux:input label="Kelas" placeholder="Nama kelas" wire:model.defer="class_name" required />

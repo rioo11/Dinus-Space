@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->string('activity_name');
-            $table->enum('schedule_type', ['academic', 'booking']);
-            $table->enum('semester', ['ganjil', 'genap'])->nullable();
+            $table->enum('schedule_type', ['Academic', 'Booking']);
             $table->enum('day_of_week', ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'])->nullable();
             $table->date('date')->nullable();
             $table->time('start_time');
